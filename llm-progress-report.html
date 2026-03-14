@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The State of LLM Progress — A Fact-Checked Analysis (March 2026)</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232735;
+    --border: #2e3345;
+    --text: #e4e6f0;
+    --text-dim: #8b8fa3;
+    --accent: #6c8cff;
+    --accent2: #a78bfa;
+    --green: #4ade80;
+    --red: #f87171;
+    --amber: #fbbf24;
+    --teal: #2dd4bf;
+    --rose: #fb7185;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  a { color: var(--accent); text-decoration: none; transition: color .2s; }
+  a:hover { color: var(--accent2); text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #0f1117 0%, #1a1040 40%, #0f1117 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 60% 50%, rgba(108,140,255,.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(167,139,250,.06) 0%, transparent 50%);
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes drift { from { transform: translate(0,0); } to { transform: translate(-3%,2%); } }
+  .hero > * { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #e4e6f0 30%, #6c8cff 70%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+  }
+  .hero .date-badge {
+    display: inline-block;
+    padding: .35rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: .85rem;
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,.03);
+  }
+
+  /* Nav dots */
+  .toc {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+  .toc a {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    display: block;
+    transition: all .3s;
+  }
+  .toc a:hover, .toc a.active { background: var(--accent); transform: scale(1.4); }
+  @media (max-width: 900px) { .toc { display: none; } }
+
+  /* Container */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* TLDR */
+  .tldr {
+    background: linear-gradient(135deg, rgba(108,140,255,.08), rgba(167,139,250,.06));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin: -3rem auto 4rem;
+    max-width: 960px;
+    position: relative;
+    z-index: 2;
+  }
+  .tldr h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    color: var(--accent);
+  }
+  .tldr ul { list-style: none; }
+  .tldr li {
+    padding: .55rem 0;
+    padding-left: 1.6rem;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .tldr li:last-child { border-bottom: none; }
+  .tldr li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .tldr li:nth-child(1)::before { background: var(--green); }
+  .tldr li:nth-child(2)::before { background: var(--teal); }
+  .tldr li:nth-child(3)::before { background: var(--accent); }
+  .tldr li:nth-child(4)::before { background: var(--amber); }
+  .tldr li:nth-child(5)::before { background: var(--rose); }
+  .tldr li:nth-child(6)::before { background: var(--accent2); }
+
+  /* Sections */
+  section { padding: 4rem 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  h2.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+    letter-spacing: -0.02em;
+  }
+  .section-num {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: .5rem;
+    display: block;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 .8rem;
+    color: var(--text);
+  }
+  p { margin-bottom: 1rem; color: var(--text-dim); }
+  strong { color: var(--text); }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+  }
+  thead { background: var(--surface2); }
+  th {
+    padding: .75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  td {
+    padding: .65rem 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  tr:hover td { background: rgba(108,140,255,.03); }
+  td:first-child { color: var(--text); font-weight: 500; }
+
+  /* Bar charts */
+  .bar-chart { margin: 1.5rem 0; }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+    gap: .75rem;
+  }
+  .bar-label {
+    width: 160px;
+    flex-shrink: 0;
+    font-size: .85rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: var(--surface2);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: .75rem;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--bg);
+    transition: width 1s ease;
+    min-width: fit-content;
+  }
+  .bar-fill.blue { background: linear-gradient(90deg, #6c8cff, #a78bfa); }
+  .bar-fill.green { background: linear-gradient(90deg, #4ade80, #2dd4bf); }
+  .bar-fill.amber { background: linear-gradient(90deg, #fbbf24, #f97316); }
+  .bar-fill.red { background: linear-gradient(90deg, #f87171, #fb7185); }
+  .bar-fill.teal { background: linear-gradient(90deg, #2dd4bf, #6c8cff); }
+
+  /* Blockquotes */
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem;
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+  blockquote cite {
+    display: block;
+    margin-top: .5rem;
+    font-style: normal;
+    font-size: .85rem;
+    color: var(--accent);
+  }
+
+  /* Verdict cards */
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin: 2rem 0;
+  }
+  .verdict h4 {
+    font-size: 1.1rem;
+    margin-bottom: .8rem;
+  }
+  .verdict-tag {
+    display: inline-block;
+    padding: .2rem .7rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    font-weight: 600;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+  }
+  .verdict-tag.yes { background: rgba(74,222,128,.15); color: var(--green); }
+  .verdict-tag.no { background: rgba(248,113,113,.15); color: var(--red); }
+  .verdict-tag.mixed { background: rgba(251,191,36,.15); color: var(--amber); }
+  .verdict-tag.likely { background: rgba(108,140,255,.15); color: var(--accent); }
+
+  /* Red hat section */
+  .redhat-card {
+    background: linear-gradient(135deg, rgba(248,113,113,.06), rgba(251,119,133,.03));
+    border: 1px solid rgba(248,113,113,.2);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin: 1.5rem 0;
+  }
+  .redhat-card h4 { color: var(--red); margin-bottom: .6rem; }
+
+  /* Grid cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+  }
+  .card h4 {
+    font-size: 1rem;
+    margin-bottom: .5rem;
+  }
+  .card .metric {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: .3rem;
+  }
+  .card .metric.green { color: var(--green); }
+  .card .metric.blue { color: var(--accent); }
+  .card .metric.red { color: var(--red); }
+  .card .metric.amber { color: var(--amber); }
+  .card .detail { font-size: .85rem; color: var(--text-dim); }
+
+  /* Sources */
+  .sources {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin: 2rem 0;
+  }
+  .sources h4 { margin-bottom: .8rem; font-size: 1rem; }
+  .sources ol {
+    padding-left: 1.5rem;
+    font-size: .85rem;
+    color: var(--text-dim);
+    columns: 2;
+    column-gap: 2rem;
+  }
+  @media (max-width: 700px) { .sources ol { columns: 1; } }
+  .sources li { margin-bottom: .4rem; break-inside: avoid; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: .85rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .bar-label { width: 90px; font-size: .75rem; }
+    .tldr { padding: 1.5rem; margin: -2rem 1rem 3rem; }
+    .hero h1 { font-size: 1.8rem; }
+    section { padding: 2.5rem 0; }
+    h2.section-title { font-size: 1.5rem; }
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- Side nav dots -->
+<nav class="toc" aria-label="Section navigation">
+  <a href="#tldr" title="Summary"></a>
+  <a href="#cost" title="Cost"></a>
+  <a href="#speed" title="Speed"></a>
+  <a href="#intelligence" title="Intelligence"></a>
+  <a href="#expert" title="Expert Views"></a>
+  <a href="#redhat" title="Red Hat"></a>
+  <a href="#verdict" title="Verdict"></a>
+  <a href="#sources" title="Sources"></a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div class="date-badge">Research Report &mdash; March 14, 2026</div>
+  <h1>The State of LLM Progress:<br>Plateau, Paradigm Shift, or&nbsp;Both?</h1>
+  <p class="subtitle">A multi-agent, fact-checked analysis of cost deflation, speed gains, intelligence growth, and 24-month forecasts &mdash; including a dedicated red-hat contrarian review.</p>
+</header>
+
+<!-- ─── TL;DR ─── -->
+<div class="container">
+<div class="tldr" id="tldr">
+  <h2>Quick Summary — 60 Seconds</h2>
+  <ul>
+    <li><strong>Inference costs are falling ~10&times; per year</strong> for equivalent capability. GPT-3-level performance dropped from $60/M tokens (2021) to $0.06/M tokens (2024) — a 1,000&times; reduction in 3&nbsp;years.</li>
+    <li><strong>Inference speed has improved 100–1,000&times;</strong> since 2020, driven by FlashAttention, vLLM, speculative decoding, and new hardware (Cerebras: 2,314 tok/s on Llama-70B; NVIDIA Blackwell: 40,000+ tok/s).</li>
+    <li><strong>Intelligence gains have been dramatic but uneven.</strong> MMLU: 44%→92%. AIME math: 13%→97%. SWE-bench coding: 49%→81%. But many benchmarks are now saturated, and ARC-AGI-2 shows models still score &lt;38% vs. humans at 100%.</li>
+    <li><strong>Pre-training scaling has hit diminishing returns</strong> — this is near-consensus. But progress has shifted to inference-time compute (o1/o3), MoE architectures, and agentic workflows, which are delivering real capability gains.</li>
+    <li><strong>The red-hat view is sobering:</strong> Training costs are growing 2.4&times;/year, hallucination remains structural (28–82%), the data wall approaches (exhaustion by 2026–2032), 95% of enterprise AI investments show zero ROI, and transformers have provable theoretical ceilings.</li>
+    <li><strong>The next 24 months are decisive.</strong> $690B+ in 2026 hyperscaler capex bets on continued progress. If GPT-5, Gemini 4, and Claude 5 show major jumps, the thesis survives. If they plateau, a multi-trillion-dollar reckoning begins.</li>
+  </ul>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 1: COST                           -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="cost">
+<div class="container reveal">
+<span class="section-num">Section 1</span>
+<h2 class="section-title">Cost: A Tale of Two Exponentials</h2>
+<p>Two paradoxical mega-trends are occurring simultaneously: training costs are <em>rising</em> exponentially while inference costs are <em>falling</em> exponentially.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Training Cost Growth</h4>
+    <div class="metric red">2.4&times;/yr</div>
+    <div class="detail">Frontier training cost doubling every ~7 months. From $900 (Transformer, 2017) to $191M (Gemini Ultra, 2023). Heading toward $1B+ by 2027.</div>
+  </div>
+  <div class="card">
+    <h4>Inference Cost Deflation</h4>
+    <div class="metric green">~10&times;/yr</div>
+    <div class="detail">For equivalent capability. GPT-3 level: $60→$0.06/M tokens in 3 years (1,000&times;). PhD-level science questions: 40&times;/year decline.</div>
+  </div>
+  <div class="card">
+    <h4>H100 GPU Rental</h4>
+    <div class="metric blue">-70%</div>
+    <div class="detail">From $7.50–$11/hr (mid-2023 scarcity peak) to $2.00–$2.20/hr (early 2026). AWS cut H100 pricing by 44% in mid-2025.</div>
+  </div>
+  <div class="card">
+    <h4>DeepSeek V3 Shock</h4>
+    <div class="metric amber">$5.6M</div>
+    <div class="detail">Trained a 671B MoE model competitive with GPT-4 for ~3–5% of GPT-4's cost. Used FP8 precision, custom DualPipe, and only 37B active params.</div>
+  </div>
+</div>
+
+<h3>Inference Price Per Million Tokens — Over Time</h3>
+<p>Tracking the cost to achieve GPT-3-equivalent performance (MMLU ~42%):</p>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">GPT-3 (Nov 2021)</span>
+    <div class="bar-track"><div class="bar-fill red" style="width:100%">$60.00</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">GPT-3.5 (Mar 2023)</span>
+    <div class="bar-track"><div class="bar-fill amber" style="width:2.9%">$1.75</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">GPT-4o mini (Jul 2024)</span>
+    <div class="bar-track"><div class="bar-fill teal" style="width:0.63%">$0.38</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Llama 3.2 3B (Late 2024)</span>
+    <div class="bar-track"><div class="bar-fill green" style="width:0.4%">$0.06</div></div>
+  </div>
+</div>
+
+<h3>Key Efficiency Breakthroughs Driving Cost Down</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Technique</th><th>Paper / Date</th><th>Impact</th></tr></thead>
+<tbody>
+<tr><td>FlashAttention</td><td>Tri Dao et al., May 2022</td><td>7.6&times; runtime speedup; 10–20&times; memory savings</td></tr>
+<tr><td>Mixture of Experts</td><td>Shazeer et al., 2017; Mixtral 2023; DeepSeek V3 2024</td><td>Only 37B of 671B params active — massive compute savings</td></tr>
+<tr><td>Quantization (AWQ)</td><td>Lin et al., Jun 2023 — MLSys 2024 Best Paper</td><td>FP16→INT4 yields ~4&times; memory &amp; compute savings</td></tr>
+<tr><td>Speculative Decoding</td><td>Leviathan et al., ICML 2023</td><td>2–3&times; inference speedup with no quality loss</td></tr>
+<tr><td>Knowledge Distillation</td><td>Hinton et al., 2015; DeepSeek-R1 distilled 2025</td><td>Reasoning in models as small as 1.5B parameters</td></tr>
+<tr><td>PagedAttention / vLLM</td><td>Kwon et al., SOSP 2023</td><td>KV cache waste from 60–80% down to &lt;4%; 2–4&times; throughput</td></tr>
+</tbody>
+</table>
+</div>
+
+<blockquote>
+  "For an LLM of equivalent performance, the cost is decreasing by 10&times; every year."
+  <cite>— Guido Appenzeller, a16z, <a href="https://a16z.com/llmflation-llm-inference-cost/">LLMflation</a>, November 2024</cite>
+</blockquote>
+
+<blockquote>
+  "Today, we have a 1-billion-parameter model that exceeds the performance of a 175-billion-parameter model just 3 years ago."
+  <cite>— Guido Appenzeller, a16z, November 2024</cite>
+</blockquote>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 2: SPEED                          -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="speed">
+<div class="container reveal">
+<span class="section-num">Section 2</span>
+<h2 class="section-title">Speed: 100–1,000&times; Faster in Five Years</h2>
+<p>The compound effect of algorithmic and hardware advances has produced one of the most rapid efficiency improvements in computing history.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>70B-Class Tokens/sec</h4>
+    <div class="metric green">2,314</div>
+    <div class="detail">Cerebras Llama 3.3 70B. Up from ~30–50 tok/s in 2022. A 50–75&times; improvement.</div>
+  </div>
+  <div class="card">
+    <h4>405B-Class Tokens/sec</h4>
+    <div class="metric blue">969</div>
+    <div class="detail">Cerebras Llama 3.1 405B with 240ms TTFT. Previously impossible at interactive speeds.</div>
+  </div>
+  <div class="card">
+    <h4>Blackwell (B200)</h4>
+    <div class="metric amber">40,000+</div>
+    <div class="detail">Tokens/sec on Llama 4. 15&times; improvement over prior generation. TensorRT-LLM optimized.</div>
+  </div>
+  <div class="card">
+    <h4>Context Window</h4>
+    <div class="metric blue">5,000&times;</div>
+    <div class="detail">From 2K tokens (GPT-3, 2020) to 10M tokens (Llama 4, 2025). 500–5,000&times; growth.</div>
+  </div>
+</div>
+
+<h3>Hardware Speed Comparison — Tokens/sec on 70B Models</h3>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">A100 baseline (2022)</span>
+    <div class="bar-track"><div class="bar-fill red" style="width:2.2%">~50</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Groq LPU (2024)</span>
+    <div class="bar-track"><div class="bar-fill amber" style="width:11.9%">276</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Groq + Spec. Dec.</span>
+    <div class="bar-track"><div class="bar-fill teal" style="width:71.7%">1,660</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Cerebras WSE-3</span>
+    <div class="bar-track"><div class="bar-fill green" style="width:100%">2,314</div></div>
+  </div>
+</div>
+
+<h3>Key Algorithmic Breakthroughs</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Technique</th><th>Paper</th><th>Speedup</th></tr></thead>
+<tbody>
+<tr><td>FlashAttention-2</td><td>Tri Dao, Jul 2023</td><td>50–73% theoretical max FLOPs on A100</td></tr>
+<tr><td>Continuous Batching (Orca)</td><td>Yu et al., OSDI 2022</td><td>36.9&times; throughput on GPT-3 175B</td></tr>
+<tr><td>PagedAttention / vLLM</td><td>Kwon et al., SOSP 2023</td><td>2–4&times; over FasterTransformer; up to 24&times; over HuggingFace</td></tr>
+<tr><td>Multi-Head Latent Attention</td><td>DeepSeek-V2, May 2024</td><td>93.3% KV cache reduction; 5.76&times; throughput</td></tr>
+<tr><td>Grouped Query Attention</td><td>Ainslie et al., EMNLP 2023</td><td>75% KV cache savings (Llama 2/3, Mistral)</td></tr>
+<tr><td>ReDrafter (Spec. Decoding)</td><td>Apple/NVIDIA, 2024</td><td>2.7&times; speedup in TensorRT-LLM</td></tr>
+</tbody>
+</table>
+</div>
+
+<blockquote>
+  "TTFT scales quadratically with prompt length in vanilla transformers, magnifying its impact for retrieval-augmented or few-shot prompting settings… TTFT accounts for up to 80% of inference time on long-context datasets."
+  <cite>— EmergentMind TTFT Topic Survey</cite>
+</blockquote>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 3: INTELLIGENCE                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="intelligence">
+<div class="container reveal">
+<span class="section-num">Section 3</span>
+<h2 class="section-title">Intelligence: Dramatic but Uneven Gains</h2>
+<p>Benchmark scores show extraordinary progress — but many tests are now saturated, and harder benchmarks reveal large remaining gaps.</p>
+
+<h3>Benchmark Trajectories (2020 → Early 2026)</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Benchmark</th><th>What It Measures</th><th>GPT-3 (2020)</th><th>GPT-4 (2023)</th><th>Best (2026)</th><th>Human Level</th></tr></thead>
+<tbody>
+<tr><td>MMLU</td><td>General knowledge (57 subjects)</td><td>43.9%</td><td>86.4%</td><td>~93%</td><td>89.8%</td></tr>
+<tr><td>GSM8K</td><td>Grade-school math</td><td>~35%</td><td>~95%</td><td>~99%</td><td>~95%</td></tr>
+<tr><td>MATH</td><td>Competition math</td><td>—</td><td>~42%</td><td>97.3%</td><td>~90%</td></tr>
+<tr><td>AIME</td><td>Elite math competition</td><td>—</td><td>~13%</td><td>96.7%</td><td>Varies</td></tr>
+<tr><td>GPQA Diamond</td><td>PhD-level science</td><td>—</td><td>39%</td><td>94.1%</td><td>~65–70%</td></tr>
+<tr><td>HumanEval</td><td>Code generation</td><td>~0%</td><td>~80%</td><td>92%</td><td>~90%</td></tr>
+<tr><td>SWE-bench Verified</td><td>Real GitHub issues</td><td>—</td><td>—</td><td>80.9%</td><td>—</td></tr>
+<tr><td>HellaSwag</td><td>Commonsense reasoning</td><td>~78%</td><td>95.3%</td><td>~96%</td><td>95.6%</td></tr>
+<tr><td>ARC-AGI-1</td><td>Abstract reasoning</td><td>0%</td><td>5%</td><td>87.5%</td><td>~98%</td></tr>
+<tr><td>ARC-AGI-2</td><td>Harder abstract reasoning</td><td>—</td><td>—</td><td>37.6%</td><td>100%</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>MMLU Trajectory — From Random Chance to Superhuman</h3>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">GPT-3 (2020)</span>
+    <div class="bar-track"><div class="bar-fill red" style="width:43.9%">43.9%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">GPT-3.5 (2022)</span>
+    <div class="bar-track"><div class="bar-fill amber" style="width:70%">70.0%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">GPT-4 (2023)</span>
+    <div class="bar-track"><div class="bar-fill teal" style="width:86.4%">86.4%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Claude 3.5 (2024)</span>
+    <div class="bar-track"><div class="bar-fill blue" style="width:90.4%">90.4%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">o1-preview (2024)</span>
+    <div class="bar-track"><div class="bar-fill green" style="width:92.3%">92.3%</div></div>
+  </div>
+</div>
+
+<h3>The Reasoning Revolution</h3>
+<p>The most significant paradigm shift of 2024–2025 was <strong>inference-time compute scaling</strong> — letting models "think longer" via extended chain-of-thought reasoning.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>OpenAI o1 (Sep 2024)</h4>
+    <p>Pioneered commercial "thinking" models using RL-trained reasoning. AIME: 83.3% (vs. GPT-4o's 13.4%). Codeforces: 89th percentile. GPQA: 78% (surpassing PhD experts).</p>
+  </div>
+  <div class="card">
+    <h4>OpenAI o3 (Apr 2025)</h4>
+    <p>ARC-AGI: 87.5%. AIME: 96.7%. FrontierMath: 25% (previous best: 2%). Codeforces: top ~200 humans worldwide. SWE-bench: 71.7%.</p>
+  </div>
+  <div class="card">
+    <h4>DeepSeek-R1 (Jan 2025)</h4>
+    <p>"The biggest shock in AI in 2025." Matched o1 at 3–5% of cost using pure RL (GRPO). MATH-500: 97.3%. API: $0.55/M tokens vs. OpenAI's $15.00.</p>
+  </div>
+</div>
+
+<blockquote>
+  "ARC-AGI-1 took 4 years to go from 0% with GPT-3 in 2020 to 5% in 2024 with GPT-4o — then o3 exploded to 87.5% in December 2024."
+  <cite>— <a href="https://arcprize.org/blog/oai-o3-pub-breakthrough">ARC Prize, December 2024</a></cite>
+</blockquote>
+
+<h3>Coding Capabilities — SWE-bench Verified</h3>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">DeepSeek-R1 (Jan '25)</span>
+    <div class="bar-track"><div class="bar-fill amber" style="width:49.2%">49.2%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">o3 (Apr '25)</span>
+    <div class="bar-track"><div class="bar-fill teal" style="width:71.7%">71.7%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Claude Sonnet 4 (May '25)</span>
+    <div class="bar-track"><div class="bar-fill blue" style="width:72.7%">72.7%</div></div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Claude Opus 4.5 (Late '25)</span>
+    <div class="bar-track"><div class="bar-fill green" style="width:80.9%">80.9%</div></div>
+  </div>
+</div>
+
+<h3>Scaling Laws — Are We Still on the Curve?</h3>
+<p>The original <strong>Kaplan et al. (2020)</strong> scaling laws predicted smooth power-law improvements with more compute. <strong>Chinchilla (Hoffmann et al., 2022)</strong> refined this, showing data matters as much as parameters. The current picture:</p>
+<ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-dim);">
+  <li><strong>Pre-training scaling</strong> is hitting diminishing returns — near-consensus among researchers</li>
+  <li><strong>Inference-time scaling</strong> (o1/o3 paradigm) has opened a <em>new</em> scaling dimension</li>
+  <li>The <strong>"Densing Law"</strong> (Nature Machine Intelligence, 2025) observes that capability per parameter is improving at a consistent rate</li>
+  <li>Small accuracy gains compound: 95%→97% single-step accuracy = <strong>6&times; improvement on 100-step tasks</strong></li>
+</ul>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 4: EXPERT OPINIONS                -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="expert">
+<div class="container reveal">
+<span class="section-num">Section 4</span>
+<h2 class="section-title">Expert Views: The Great Debate</h2>
+<p>The field is deeply divided. Here's what the key figures are actually saying.</p>
+
+<h3>The "We've Plateaued" Camp</h3>
+
+<blockquote>
+  "The 2010s were the age of scaling, now we're back in the age of wonder and discovery once again. Everyone is looking for the next thing… The low-hanging fruit from making everything bigger has been picked."
+  <cite>— <strong>Ilya Sutskever</strong>, Co-founder of OpenAI; CEO of Safe Superintelligence Inc., <a href="https://www.dwarkesh.com/p/ilya-sutskever-2">Dwarkesh Patel interview, Nov 2025</a></cite>
+</blockquote>
+
+<blockquote>
+  "The path to superintelligence — just train up the LLMs, train on more synthetic data, hire thousands of people to school your system in post-training, invent new tweaks on RL — I think is complete bullshit. It's just never going to work."
+  <cite>— <strong>Yann LeCun</strong>, Meta AI Chief (now AMI Labs), <a href="https://www.thenews.com.pk/latest/1395197-yann-lecuns-world-model-ai-vision-challenges-llm-road-to-superintelligence">December 2025</a></cite>
+</blockquote>
+
+<blockquote>
+  "On the order of half a trillion dollars has been invested on a premise that I have long argued was unlikely to succeed: the idea that we could get to 'artificial general intelligence' simply by adding more and more data and GPUs."
+  <cite>— <strong>Gary Marcus</strong>, NYU Professor Emeritus, <a href="https://fortune.com/2025/02/19/generative-ai-scaling-agi-deep-learning/">Fortune, February 2025</a></cite>
+</blockquote>
+
+<h3>The "Progress Continues" Camp</h3>
+
+<blockquote>
+  "We are now confident we know how to build AGI… systems that start to point to AGI are coming into view."
+  <cite>— <strong>Sam Altman</strong>, CEO of OpenAI, <a href="https://opentools.ai/news/sam-altman-unveils-openais-bold-agi-ambitions-aiming-for-2027-2028">January 2025</a></cite>
+</blockquote>
+
+<blockquote>
+  "There's no ceiling below the level of humans… there's a lot of room at the top for AIs. We expect powerful AI systems will emerge in late 2026 or early 2027."
+  <cite>— <strong>Dario Amodei</strong>, CEO of Anthropic, <a href="https://www.lesswrong.com/posts/gabPgK9e83QrmcvbK/what-s-up-with-anthropic-predicting-agi-by-early-2027-1">Anthropic OSTP recommendations, March 2025</a></cite>
+</blockquote>
+
+<blockquote>
+  "AI that can match humans at any task will arrive in five to 10 years… one or two more big breakthroughs at the level of Transformers or AlphaGo would likely be required."
+  <cite>— <strong>Demis Hassabis</strong>, CEO of Google DeepMind, <a href="https://www.cnbc.com/2025/03/17/human-level-ai-will-be-here-in-5-to-10-years-deepmind-ceo-says.html">CNBC, March 2025</a></cite>
+</blockquote>
+
+<h3>AGI Timeline Estimates</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Source</th><th>Prediction</th><th>Timeline</th></tr></thead>
+<tbody>
+<tr><td>Sam Altman / OpenAI</td><td>AGI via current approach extensions</td><td>2027–2028</td></tr>
+<tr><td>Dario Amodei / Anthropic</td><td>Nobel-laureate-level AI</td><td>Late 2026 – Early 2027</td></tr>
+<tr><td>Demis Hassabis / DeepMind</td><td>AGI (needs 1–2 breakthroughs)</td><td>2028–2030</td></tr>
+<tr><td>Ilya Sutskever / SSI</td><td>Human-level learning</td><td>2031–2046</td></tr>
+<tr><td>Yann LeCun / AMI Labs</td><td>Needs world models, LLMs insufficient</td><td>5+ years</td></tr>
+<tr><td>Metaculus prediction markets</td><td>50% probability of AGI</td><td>By 2030</td></tr>
+<tr><td>AAAI academic survey</td><td>Median estimate</td><td>2047</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>The Investment Signal</h3>
+<p>The five largest US cloud/AI providers committed <strong>$660–690 billion</strong> in 2026 capex — nearly doubling 2025. The Stargate Project alone: up to $500B over four years. This represents the largest infrastructure buildout in history, predicated on continued AI capability growth.</p>
+
+<div class="card-grid">
+  <div class="card">
+    <h4>Amazon</h4>
+    <div class="metric blue">$200B</div>
+    <div class="detail">2026 projected CapEx</div>
+  </div>
+  <div class="card">
+    <h4>Google</h4>
+    <div class="metric blue">$175B</div>
+    <div class="detail">2026 projected CapEx</div>
+  </div>
+  <div class="card">
+    <h4>Meta</h4>
+    <div class="metric blue">$125B</div>
+    <div class="detail">2026 projected CapEx</div>
+  </div>
+  <div class="card">
+    <h4>Microsoft</h4>
+    <div class="metric blue">$100B+</div>
+    <div class="detail">2026 projected CapEx</div>
+  </div>
+</div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 5: RED HAT                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="redhat">
+<div class="container reveal">
+<span class="section-num">Section 5 — Devil's Advocate</span>
+<h2 class="section-title" style="color: var(--red);">Red Hat: The Uncomfortable Truths</h2>
+<p>A dedicated contrarian analysis to ensure this report isn't just cheerleading for AI progress.</p>
+
+<div class="redhat-card">
+  <h4>1. Benchmark Saturation &amp; Goodhart's Law</h4>
+  <p>GSM8K, MMLU, HellaSwag, and HumanEval are all functionally saturated. Rising scores increasingly reflect optimization <em>for benchmarks</em>, not rising intelligence. The <strong>LMArena scandal</strong> revealed Meta tested 27 private LLM variants on Chatbot Arena before Llama 4, only publishing the top score. A study by Cohere, Stanford, MIT, and Ai2 found that even modest access to Arena data could boost scores by up to 112%.</p>
+  <p style="font-size:.85rem;">Sources: <a href="https://www.theregister.com/2025/04/08/meta_llama4_cheating/">The Register</a>, <a href="https://techcrunch.com/2025/04/30/study-accuses-lm-arena-of-helping-top-ai-labs-game-its-benchmark/">TechCrunch</a></p>
+</div>
+
+<div class="redhat-card">
+  <h4>2. Training Costs Are Exploding</h4>
+  <p>While inference drops, frontier training costs grow at <strong>2.4&times;/year</strong>. GPT-4: $78M. Gemini Ultra: $191M. Heading toward $1B single runs. Only a handful of companies can afford this, concentrating AI development and "limiting the range of perspectives and approaches considered, especially from academia and broader society."</p>
+  <p style="font-size:.85rem;">Source: <a href="https://arxiv.org/abs/2405.21015">Cottier et al., arXiv:2405.21015</a></p>
+</div>
+
+<div class="redhat-card">
+  <h4>3. Hallucination Is Structural, Not a Bug</h4>
+  <p>Large-scale evaluation shows <strong>factual hallucination rates of 28–82%</strong> across major LLMs. The root cause is architectural: "training minimizes cross-entropy over token sequences, rewarding statistically probable continuations rather than per-instance factual accuracy." OpenAI's own September 2025 paper acknowledges that "next-token training objectives and common leaderboards reward confident guessing over calibrated uncertainty, so models learn to bluff."</p>
+  <p style="font-size:.85rem;">Sources: <a href="https://arxiv.org/html/2510.06265v2">arXiv LLM Hallucination Survey</a>, <a href="https://www.lakera.ai/blog/guide-to-hallucinations-in-large-language-models">Lakera</a></p>
+</div>
+
+<div class="redhat-card">
+  <h4>4. The Data Wall Is Approaching</h4>
+  <p>Epoch AI estimates the entire corpus of high-quality public text is ~<strong>300 trillion tokens</strong>, projected to be fully utilized between <strong>2026 and 2032</strong>. OpenAI researchers stated that in developing GPT-4.5, "a shortage of fresh data was more of a constraint than a lack of computing power." Synthetic data risks <strong>model collapse</strong> — a <em>Nature</em> paper (Shumailov et al.) showed models trained recursively on synthetic data degrade progressively.</p>
+  <p style="font-size:.85rem;">Sources: <a href="https://epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data">Epoch AI</a>, <a href="https://www.nature.com/articles/s41586-024-07566-y">Nature (Shumailov et al.)</a></p>
+</div>
+
+<div class="redhat-card">
+  <h4>5. The ROI Crisis</h4>
+  <p>An August 2025 MIT Media Lab report stated that <strong>"despite $30–40 billion in enterprise investment into GenAI, 95% of organizations are getting zero return."</strong> An NBER study (February 2026) found 90% of firms reported no AI impact on workplace productivity. The infrastructure-to-revenue gap: ~$400B in 2025 CapEx vs. ~$100B in actual AI revenue. OpenAI committed $1.4 trillion over 8 years with only $13B in revenue.</p>
+  <p style="font-size:.85rem;">Sources: <a href="https://fortune.com/2025/12/15/aritficial-intelligence-return-on-investment-aiq/">Fortune</a>, <a href="https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/">Menlo Ventures</a></p>
+</div>
+
+<div class="redhat-card">
+  <h4>6. Transformers Have Provable Theoretical Limits</h4>
+  <p>A peer-reviewed paper demonstrates that transformers are <strong>upper bounded by uniform TC<sup>0</sup> circuit classes</strong> and are "fundamentally unable to solve NC<sup>1</sup>-complete tasks" for realistic parameter budgets. An ICLR 2025 paper found LLMs "struggle with proof search" and "strongly prefer heuristics." Additionally, <strong>4.4% of all US energy</strong> now goes to data centers, with the IEA projecting demand to double to 945 TWh by 2030.</p>
+  <p style="font-size:.85rem;">Sources: <a href="https://arxiv.org/pdf/2402.08164">arXiv:2402.08164</a>, <a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai">IEA</a></p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 6: VERDICT                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="verdict">
+<div class="container reveal">
+<span class="section-num">Section 6</span>
+<h2 class="section-title">The Verdict: Answering the Critical Questions</h2>
+
+<div class="verdict">
+  <h4>Have we reached a plateau?</h4>
+  <span class="verdict-tag mixed">Partially Yes</span>
+  <p><strong>Pre-training scaling has hit diminishing returns</strong> — this is near-consensus, acknowledged even by Ilya Sutskever. Many benchmarks (MMLU, GSM8K, HellaSwag, HumanEval) are saturated. However, <strong>progress has not stopped</strong>; it has shifted paradigms. Inference-time compute (o1/o3), MoE architectures, reasoning RL, and agentic workflows represent new scaling dimensions delivering real gains. ARC-AGI-2 (best model: 37.6% vs. human 100%) shows we are nowhere near human-level general intelligence. The "plateau" is in one specific dimension of scaling — not in overall capability.</p>
+</div>
+
+<div class="verdict">
+  <h4>Can it continue to grow at the current rate?</h4>
+  <span class="verdict-tag mixed">Unlikely at the Same Rate</span>
+  <p>The ~10&times;/year inference cost deflation may slow as low-hanging optimizations (quantization, MoE) are exhausted. The data wall (300T token limit, 2026–2032) and energy constraints (4.4% of US electricity, heading higher) create real headwinds. Training costs growing at 2.4&times;/year are becoming unsustainable for all but the wealthiest organizations. However, the convergence of new hardware (Blackwell, Groq, Cerebras, TPU Ironwood), new architectures (hybrid SSM+transformer), and inference scaling suggest <strong>continued rapid progress on a somewhat different trajectory</strong>. Expect 3–5&times;/year cost improvement rather than 10&times;.</p>
+</div>
+
+<div class="verdict">
+  <h4>Is there going to be a new breakthrough that speeds things up?</h4>
+  <span class="verdict-tag likely">Likely, But Uncertain</span>
+  <p>Several candidates are in active development:</p>
+  <ul style="margin: .8rem 0 .8rem 1.5rem; color: var(--text-dim);">
+    <li><strong>Inference-time scaling</strong> (already proven): o1/o3/R1 show 10–80 percentage point gains on reasoning tasks</li>
+    <li><strong>Hybrid architectures</strong>: Mamba + Transformer hybrids (AI21 Jamba) show promising linear-scaling with context length</li>
+    <li><strong>World models</strong>: Fei-Fei Li's World Labs and LeCun's AMI Labs ($1.03B) pursuing fundamentally different approaches</li>
+    <li><strong>Hardware leaps</strong>: Cerebras WSE-3 (7,000&times; more memory bandwidth than H100), NVIDIA Blackwell, Google Ironwood TPU</li>
+    <li><strong>Agentic systems</strong>: Multi-agent pipelines showing emergent capabilities beyond individual model improvements</li>
+  </ul>
+  <p>The red-hat view: Transformers have provable theoretical limits, hallucination appears structural, and no alternative architecture has yet demonstrated clear superiority at scale. Breakthroughs are <strong>possible but not guaranteed</strong>.</p>
+</div>
+
+<div class="verdict">
+  <h4>What can we expect in the coming 24 months?</h4>
+  <span class="verdict-tag likely">High-Confidence Predictions</span>
+  <p>Based on the weight of evidence:</p>
+  <ul style="margin: .8rem 0 .8rem 1.5rem; color: var(--text-dim);">
+    <li><strong>Inference costs will drop another 5–30&times;</strong> by early 2028, driven by Blackwell/Ironwood hardware and continued algorithmic gains</li>
+    <li><strong>Reasoning models become standard</strong> — the o1/R1 paradigm will be table stakes, not a differentiator</li>
+    <li><strong>Agentic AI goes mainstream</strong> — autonomous coding, research, and business process agents in production at scale. MIT Technology Review already named generative coding a 2026 breakthrough technology</li>
+    <li><strong>Context windows reach 10M+ tokens</strong> routinely, enabling new workflows (entire codebases, full document collections)</li>
+    <li><strong>Open-source parity continues</strong> — DeepSeek, Llama, Qwen will match proprietary models within months of release, commoditizing base capabilities</li>
+    <li><strong>The ROI reckoning arrives</strong> — the $690B capex bet must show returns. Expect consolidation if GPT-5/Gemini 4/Claude 5 show only marginal gains</li>
+    <li><strong>Regulation tightens</strong> — EU AI Act fully enforced, US executive orders, China's evolving framework. Compliance costs will be significant</li>
+  </ul>
+
+  <p style="margin-top:1.5rem;"><strong>The balanced view:</strong> We are not in a plateau — we are in a <em>paradigm transition</em>. The old scaling paradigm (bigger models + more data) is exhausting. New paradigms (inference compute, MoE, agents, hybrid architectures) are emerging and delivering real gains. But the rate of progress is becoming more uneven, the cost structure is shifting, and the gap between what AI can do on benchmarks versus reliable real-world deployment remains large. The next 24 months will likely bring impressive demo-worthy capabilities alongside persistent reliability challenges.</p>
+</div>
+
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  SECTION 7: SOURCES                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="sources">
+<div class="container reveal">
+<span class="section-num">References</span>
+<h2 class="section-title">Sources &amp; Citations</h2>
+
+<div class="sources">
+  <h4>Cost &amp; Efficiency</h4>
+  <ol>
+    <li>Cottier, Rahman et al., "<a href="https://arxiv.org/abs/2405.21015">The Rising Costs of Training Frontier AI Models</a>," arXiv:2405.21015, May 2024</li>
+    <li>Epoch AI, "<a href="https://epoch.ai/blog/how-much-does-it-cost-to-train-frontier-ai-models">How Much Does It Cost to Train Frontier AI Models?</a>"</li>
+    <li>Epoch AI, "<a href="https://epoch.ai/data-insights/llm-inference-price-trends">LLM Inference Price Trends</a>"</li>
+    <li>Appenzeller, "<a href="https://a16z.com/llmflation-llm-inference-cost/">LLMflation</a>," a16z, November 2024</li>
+    <li>Gundlach et al., "<a href="https://arxiv.org/abs/2511.23455">The Price of Progress: Algorithmic Efficiency and the Falling Cost of AI Inference</a>," arXiv:2511.23455, November 2025</li>
+    <li>Stanford HAI, "<a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development">AI Index Report 2025</a>"</li>
+    <li><a href="https://venturebeat.com/ai/deepseek-r1s-bold-bet-on-reinforcement-learning-how-it-outpaced-openai-at-3-of-the-cost/">VentureBeat: DeepSeek R1</a>, January 2025</li>
+    <li><a href="https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/">OpenAI: GPT-4o Mini Announcement</a>, July 2024</li>
+  </ol>
+</div>
+
+<div class="sources">
+  <h4>Speed &amp; Hardware</h4>
+  <ol start="9">
+    <li>Tri Dao et al., "<a href="https://arxiv.org/abs/2205.14135">FlashAttention</a>," arXiv:2205.14135, May 2022</li>
+    <li>Tri Dao, "<a href="https://arxiv.org/abs/2307.08691">FlashAttention-2</a>," arXiv:2307.08691, July 2023</li>
+    <li>Shah &amp; Dao, "<a href="https://arxiv.org/abs/2407.08608">FlashAttention-3</a>," arXiv:2407.08608, July 2024</li>
+    <li>Yu et al., "<a href="https://www.usenix.org/conference/osdi22/presentation/yu">Orca: Continuous Batching</a>," OSDI 2022</li>
+    <li>Kwon et al., "<a href="https://arxiv.org/abs/2309.06180">PagedAttention / vLLM</a>," SOSP 2023</li>
+    <li>DeepSeek, "<a href="https://arxiv.org/abs/2405.04434">Multi-Head Latent Attention</a>," arXiv:2405.04434, May 2024</li>
+    <li>Ainslie et al., "GQA: Grouped Query Attention," EMNLP 2023</li>
+    <li><a href="https://www.cerebras.ai/blog/cerebras-inference-3x-faster">Cerebras Inference Benchmarks</a>, 2024–2025</li>
+    <li><a href="https://nvidia.github.io/TensorRT-LLM/blogs/H200launch.html">NVIDIA TensorRT-LLM H200 Blog</a></li>
+    <li><a href="https://groq.com/blog/inside-the-lpu-deconstructing-groq-speed">Groq LPU Architecture</a></li>
+  </ol>
+</div>
+
+<div class="sources">
+  <h4>Intelligence &amp; Benchmarks</h4>
+  <ol start="19">
+    <li><a href="https://openai.com/index/learning-to-reason-with-llms/">OpenAI: Learning to Reason with LLMs</a>, September 2024</li>
+    <li><a href="https://arcprize.org/blog/oai-o3-pub-breakthrough">ARC Prize: o3 Breakthrough</a>, December 2024</li>
+    <li><a href="https://arcprize.org/blog/arc-prize-2025-results-analysis">ARC Prize 2025 Results</a></li>
+    <li><a href="https://www.datacamp.com/blog/deepseek-r1">DataCamp: DeepSeek R1 Analysis</a></li>
+    <li><a href="https://www.swebench.com/">SWE-bench Leaderboard</a></li>
+    <li>Wei et al., "<a href="https://arxiv.org/abs/2206.07682">Emergent Abilities of Large Language Models</a>," 2022</li>
+    <li>Schaeffer et al., "<a href="https://papers.neurips.cc/paper_files/paper/2023/file/adc98a266f45005c403b8311ca7e8bd7-Paper-Conference.pdf">Are Emergent Abilities a Mirage?</a>," NeurIPS 2023</li>
+    <li>"<a href="https://www.nature.com/articles/s42256-025-01137-0">Densing Law</a>," Nature Machine Intelligence, 2025</li>
+    <li>Anthropic, "<a href="https://assets.anthropic.com/m/61e7d27f8c8f5919/original/Claude-3-Model-Card.pdf">Claude 3 Model Card</a>"</li>
+  </ol>
+</div>
+
+<div class="sources">
+  <h4>Expert Opinions &amp; Forecasts</h4>
+  <ol start="27">
+    <li><a href="https://www.dwarkesh.com/p/ilya-sutskever-2">Ilya Sutskever, Dwarkesh Patel Interview</a>, November 2025</li>
+    <li><a href="https://www.thenews.com.pk/latest/1395197-yann-lecuns-world-model-ai-vision-challenges-llm-road-to-superintelligence">Yann LeCun on World Models</a>, December 2025</li>
+    <li><a href="https://fortune.com/2025/02/19/generative-ai-scaling-agi-deep-learning/">Gary Marcus, Fortune</a>, February 2025</li>
+    <li><a href="https://opentools.ai/news/sam-altman-unveils-openais-bold-agi-ambitions-aiming-for-2027-2028">Sam Altman AGI Ambitions</a>, January 2025</li>
+    <li><a href="https://www.lesswrong.com/posts/gabPgK9e83QrmcvbK/what-s-up-with-anthropic-predicting-agi-by-early-2027-1">Anthropic AGI Predictions Analysis</a>, LessWrong</li>
+    <li><a href="https://www.cnbc.com/2025/03/17/human-level-ai-will-be-here-in-5-to-10-years-deepmind-ceo-says.html">Demis Hassabis, CNBC</a>, March 2025</li>
+    <li><a href="https://80000hours.org/ai/guide/when-will-agi-arrive/">80,000 Hours: When Will AGI Arrive?</a></li>
+    <li><a href="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/">Futurum: $690B AI CapEx Sprint 2026</a></li>
+  </ol>
+</div>
+
+<div class="sources">
+  <h4>Red Hat / Contrarian</h4>
+  <ol start="35">
+    <li><a href="https://www.theregister.com/2025/04/08/meta_llama4_cheating/">The Register: Meta Llama 4 Cheating Allegations</a></li>
+    <li><a href="https://techcrunch.com/2025/04/30/study-accuses-lm-arena-of-helping-top-ai-labs-game-its-benchmark/">TechCrunch: LM Arena Accusations</a></li>
+    <li><a href="https://arxiv.org/html/2510.06265v2">arXiv: LLM Hallucination Comprehensive Survey</a></li>
+    <li><a href="https://epoch.ai/blog/will-we-run-out-of-data-limits-of-llm-scaling-based-on-human-generated-data">Epoch AI: Will We Run Out of Data?</a></li>
+    <li><a href="https://www.nature.com/articles/s41586-024-07566-y">Nature: AI Models Collapse on Recursive Synthetic Data</a> (Shumailov et al.)</li>
+    <li><a href="https://fortune.com/2025/12/15/aritficial-intelligence-return-on-investment-aiq/">Fortune: AI ROI 2026</a></li>
+    <li><a href="https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/">Menlo Ventures: State of GenAI in Enterprise</a></li>
+    <li><a href="https://arxiv.org/pdf/2402.08164">arXiv: On Limitations of the Transformer Architecture</a></li>
+    <li><a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai">IEA: Energy Demand from AI</a></li>
+    <li><a href="https://www.technologyreview.com/2025/05/20/1116327/ai-energy-usage-climate-footprint-big-tech/">MIT Technology Review: AI Energy Footprint</a></li>
+    <li><a href="https://arxiv.org/abs/2509.09677">arXiv: The Illusion of Diminishing Returns</a>, NeurIPS 2025</li>
+  </ol>
+</div>
+
+</div>
+</section>
+
+<footer>
+  <p>Report generated March 14, 2026. Multi-agent research with dedicated red-hat fact-checking.</p>
+  <p style="margin-top:.5rem;">Research agents: Cost Analyst &bull; Speed Analyst &bull; Intelligence Analyst &bull; Expert Forecaster &bull; Red Hat Contrarian</p>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => obs.observe(el));
+
+// Active nav dot
+const sections = document.querySelectorAll('section[id], .tldr');
+const dots = document.querySelectorAll('.toc a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) cur = s.id;
+  });
+  dots.forEach(d => {
+    d.classList.toggle('active', d.getAttribute('href') === '#' + cur);
+  });
+});
+</script>
+</body>
+</html>
