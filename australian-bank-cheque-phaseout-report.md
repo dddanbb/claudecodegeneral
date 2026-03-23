@@ -71,7 +71,7 @@ The 15-month gap between issuance and acceptance cessation is deliberate — che
 
 | # | Bank | Tier | Est. Assets (AUD) | Est. Market Share (Cheque Volume) | Stop Issuing Date | Stop Accepting Date | Status | Official Source |
 |---|---|---|---|---|---|---|---|---|
-| 1 | **Commonwealth Bank (CBA)** | Big 4 | ~$1,254B | ~25% | Jun 2023 (new accounts) | 30 Sep 2029 (national) | Winding down | [commbank.com.au/business/latest/changes-to-cheques.html](https://www.commbank.com.au/business/latest/changes-to-cheques.html) |
+| 1 | **Commonwealth Bank (CBA)** | Big 4 | ~$1,254B | ~25% | 3 Jun 2023 (new accounts; also stopped auto-reissue for all accounts) | 30 Sep 2029 (national) | Winding down | [commbank.com.au/business/latest/changes-to-cheques.html](https://www.commbank.com.au/business/latest/changes-to-cheques.html) |
 | 2 | **Westpac** | Big 4 | ~$1,004B | ~20% | May 2025 (corp new accts); Aug 2026 (PPS bank cheques) | 30 Sep 2029 (national) | Winding down | [westpac.com.au/corporate-banking/transactional-banking/cheque-updates/](https://www.westpac.com.au/corporate-banking/transactional-banking/cheque-updates/) |
 | 3 | **NAB** | Big 4 | ~$952B | ~18% | Mar 2023 (new accounts) | 30 Sep 2029 (national) | Winding down | [nab.com.au/customer-notices/cheque-changes](https://www.nab.com.au/customer-notices/cheque-changes) |
 | 4 | **ANZ** | Big 4 | ~$895B | ~17% | Jun 2024 (new); Nov 2024 (counter cheques) | 30 Sep 2029 (national) | Winding down | [anz.com.au/learn/cheque-changes/](https://www.anz.com.au/learn/cheque-changes/) |
@@ -81,15 +81,15 @@ The 15-month gap between issuance and acceptance cessation is deliberate — che
 | 8 | **Suncorp Bank** (now ANZ) | Medium | ~$80B | ~1.5% | 1 Mar 2024 | 14 Feb 2025 | **FULLY CEASED** | [suncorpbank.com.au/help-support/cheques-payments-options.html](https://www.suncorpbank.com.au/help-support/cheques-payments-options.html) |
 | 9 | **ING Australia** | Medium | ~$65B | ~1.5% | Mar 2026 (bank cheques) | Still accepting (via Bank@Post) | Winding down | [ing.com.au/faq-result.html?faqid=7340](https://www.ing.com.au/faq-result.html?faqid=7340) |
 | 10 | **HSBC Australia** | Medium | ~$50B (est.) | ~1% | Ongoing (no new books) | TBD (by Sep 2029) | Issuance ceased | [hsbc.com.au/help/important-notices/](https://www.hsbc.com.au/help/important-notices/) |
-| 11 | **AMP Bank** | Small | ~$28B | ~0.5% | May 2024 | 24 Nov 2024 | **FULLY CEASED** | [amp.com.au/personal-banking/ways-to-bank](https://www.amp.com.au/personal-banking/ways-to-bank) |
-| 12 | **People First Bank** (Heritage + People's Choice) | Mutual | ~$24.5B | ~0.4% | Mar 2024 (PC); 2024 (Heritage) | May 2024 (PC); 2024 (Heritage) | **FULLY CEASED** | [peopleschoice.com.au/managing-my-money/cheques](https://www.peopleschoice.com.au/managing-my-money/cheques) |
-| 13 | **Newcastle Permanent** (NGM Group) | Mutual | ~$23B | ~0.4% | Not confirmed | Not confirmed | Possibly still active | [newcastlepermanent.com.au/tools-and-services/accessing-your-money](https://www.newcastlepermanent.com.au/tools-and-services/accessing-your-money) |
+| 11 | **AMP Bank** | Small | ~$28B | ~0.5% | 11 May 2024 (bank cheques); redemption deadline 27 May 2024 | 24 Nov 2024 (third-party acceptance) | **FULLY CEASED** (three-stage) | [amp.com.au/personal-banking/ways-to-bank](https://www.amp.com.au/personal-banking/ways-to-bank) |
+| 12 | **People First Bank** (Heritage + People's Choice) | Mutual | ~$24.5B | ~0.4% | Mar 2024 (PC); 2024 (Heritage, month unverified) | May 2024 (PC); 2024 (Heritage, month unverified) | **FULLY CEASED** | [peopleschoice.com.au/managing-my-money/cheques](https://www.peopleschoice.com.au/managing-my-money/cheques) ⚠️ Entity now trades as People First Bank |
+| 13 | **Newcastle Permanent** (NGM Group) | Mutual | ~$23B | ~0.4% | Still issuing (no phase-out announced) | Still accepting | **STILL ACTIVE** — Business Cheque Account actively advertises cheque book facilities; no public cessation announcement found | [newcastlepermanent.com.au/business/everyday-banking/business-cheque-account](https://www.newcastlepermanent.com.au/business/everyday-banking/business-cheque-account) |
 | 14 | **Great Southern Bank** (ex-CUA) | Mutual | ~$20B | ~0.3% | Before May 2024 | 24 May 2024 | **FULLY CEASED** | [greatsouthernbank.com.au/help-and-contact/support/cheque](https://www.greatsouthernbank.com.au/help-and-contact/support/cheque) |
 | 15 | **Citibank Australia** (acquired by NAB) | Acquired | N/A (now NAB) | ~0.5% | Feb 2024 (migration) | Feb 2024 | **FULLY CEASED** | [nab.com.au/customer-notices/cheque-changes](https://www.nab.com.au/customer-notices/cheque-changes) |
 | 16 | **Bank Australia** | Mutual | ~$12B | ~0.2% | 12 Jan 2024 | 28 Mar 2024 | **FULLY CEASED** | [bankaust.com.au/ways-to-bank-without-cheques](https://www.bankaust.com.au/ways-to-bank-without-cheques) |
-| 17 | **Teachers Mutual Bank** (TMBL) | Mutual | ~$11B | ~0.2% | 2023 | 2023 | **FULLY CEASED** | [tmbank.com.au/ways-to-bank/cheque-decommission](https://www.tmbank.com.au/ways-to-bank/cheque-decommission) |
+| 17 | **Teachers Mutual Bank** (TMBL) | Mutual | ~$11B | ~0.2% | 2023 (month unverified) | 2023 (month unverified) | **FULLY CEASED** | [tmbank.com.au/ways-to-bank/cheque-decommission](https://www.tmbank.com.au/ways-to-bank/cheque-decommission) |
 | 18 | **Beyond Bank Australia** | Mutual | ~$8.9B | ~0.1% | May 2024 | 17 May 2024 | **FULLY CEASED** | [beyondbank.com.au/help-and-contact/faqs/cheques/](https://www.beyondbank.com.au/help-and-contact/faqs/cheques/) |
-| 19 | **ME Bank** (BOQ subsidiary) | Subsidiary | ~$30B (est.) | ~0.5% | 1 May 2025 | 1 May 2025 | **FULLY CEASED** | [mebank.com.au/support/cancelling-a-cheque/](https://www.mebank.com.au/support/cancelling-a-cheque/) |
+| 19 | **ME Bank** (BOQ subsidiary) | Subsidiary | ~$30B (est.) | ~0.5% | 1 May 2025 | 1 May 2025 | **FULLY CEASED** | [mebank.com.au/support/cancelling-a-cheque/](https://www.mebank.com.au/support/cancelling-a-cheque/) ⚠️ Generic process page; cessation announcement URL not found |
 | 20 | **Bankwest** (CBA subsidiary) | Subsidiary | ~$30B (est.) | ~1% | Mar 2024 (new/replacement books); Nov 2024 (business cheque acct) | Aligned with CBA (Sep 2029) | Issuance ceased | [bankwest.com.au/help/payments/cheque-books](https://www.bankwest.com.au/help/payments/cheque-books) |
 
 ---
@@ -110,7 +110,7 @@ The "Est. Market Share (Cheque Volume)" column estimates each bank's proportiona
 |---|---|---|
 | Big 4 (CBA, Westpac, NAB, ANZ) | ~80% combined | Still operating, winding down |
 | Medium banks still operating (Bendigo, BOQ, ING, HSBC) | ~7% combined | Issuance ceased, acceptance winding down |
-| Newcastle Permanent / NGM | ~0.4% | Possibly still operating |
+| Newcastle Permanent / NGM | ~0.4% | **Still actively issuing and accepting** (no phase-out announced) |
 | Already fully ceased (Macquarie, Suncorp, AMP, People First, Great Southern, Citi, Bank Australia, Teachers Mutual, Beyond Bank, ME Bank) | ~0% (exited) | **No longer processing cheques** |
 | Government & other | ~12.6% | Winding down by end 2028 |
 
@@ -151,11 +151,17 @@ The **Big 4** carry the overwhelming majority of remaining cheque volume (~80%) 
 
 3. **The Big 4 are the system's life support.** CBA, Westpac, NAB, and ANZ collectively process ~80% of remaining cheques and have guaranteed participation until September 2029.
 
-4. **CBA and NAB moved earliest** among the Big 4 (March-June 2023). **Westpac is the laggard** — still issuing personal cheque books without restriction as of 2024, only restricting corporate from May 2025.
+4. **CBA and NAB moved earliest** among the Big 4 (March-June 2023). **Westpac moved last** — still issuing personal cheque books without restriction as of early 2026, only restricting corporate from May 2025. (Note: Westpac's slower exit also provides continuity-of-service for customers transitioning from other banks.)
 
 5. **The "stale cheque" mechanism** is elegant: by ceasing issuance 15 months before ceasing acceptance, all legally valid cheques expire naturally.
 
-6. **Legislative reform is required** — 4 Commonwealth Acts mandate cheque payment; state gambling legislation must be amended; the Cheques Act 1986 itself must be repealed.
+6. **Legislative reform is required** — 4 Commonwealth Acts mandate cheque payment exclusively:
+   - **Health Insurance Act 1973** (s.20(2)) — Medicare "Pay Doctor Via Claimant" payments must be by cheque
+   - **Dental Benefits Act 2008** — Child Dental Benefits Schedule payments mirror the PDVC cheque mechanism
+   - **National Health Act 1953** — PBS payment provisions (specific section less well documented; confidence: MEDIUM)
+   - **Small Superannuation Accounts Act 1995** (s.32(2)) — Superannuation Holding Account payments must be non-electronic
+
+   Additionally, state gambling legislation must be amended, and the Cheques Act 1986 itself must be repealed.
 
 ---
 
@@ -227,7 +233,7 @@ The **Big 4** carry the overwhelming majority of remaining cheque volume (~80%) 
 
 2. **Digital exclusion:** 66.5% of Australians aged 75+ are digitally excluded; 40.9% of First Nations people; ~1.1 million Australians with disability are "highly digitally excluded" (2025 Australian Digital Inclusion Index).
 
-3. **Legislative barriers:** 4 Commonwealth Acts still mandate payment by cheque; state gambling legislation requires cheque payment for some winnings. Legislative reform is required but timeline not confirmed.
+3. **Legislative barriers:** 4 Commonwealth Acts still mandate payment by cheque: Health Insurance Act 1973 (s.20(2)), Dental Benefits Act 2008, National Health Act 1953, and Small Superannuation Accounts Act 1995 (s.32(2)). State gambling legislation also requires cheque payment for some winnings. Legislative reform is required but timeline not confirmed. Note: the Treasury Laws Amendment (Modernising Business Communications) Act 2023 already repealed one prior ATO cheque mandate, showing the government is actively reforming.
 
 4. **Charity sector impact:** Major charities (Heart Foundation, Greenpeace, Sydney Eye Hospital Foundation) have published explicit guidance on cheque phase-out impact on donations.
 
@@ -238,5 +244,24 @@ The **Big 4** carry the overwhelming majority of remaining cheque volume (~80%) 
 7. **URL durability:** Several bank URLs may become stale due to corporate restructuring (Suncorp now ANZ, People's Choice now People First Bank, Citi now NAB). Verify URLs before citing.
 
 ---
+
+## Confidence Levels by Report Element
+
+| Element | Confidence | Explanation |
+|---|---|---|
+| **Regulatory dates (2028/2029)** | HIGH (95%) | Confirmed by Treasury, ACCC, AusPayNet. Rock-solid. |
+| **ACCC authorisation (2 Jul 2025)** | HIGH (95%) | Document reference, URL, date all confirmed. |
+| **RBA decline statistics** | HIGH (90%) | Primary source (RBA CPS 2022, RDP 2023-08) directly cited and verified. |
+| **Big 4 bank dates** | HIGH (85%) | CBA (Jun 2023), NAB (Mar 2023), ANZ (Jun 2024), Westpac (May 2025 corp) all confirmed. Minor nuances on scope. |
+| **Macquarie, Suncorp cessation** | HIGH (85%) | Dates confirmed. Macquarie phased (Jan 2024 books, May 2024 counter, Nov 2024 acceptance). |
+| **AMP cessation** | MEDIUM-HIGH (80%) | Three-stage process confirmed. Individual stage dates verified. |
+| **Bankwest cessation** | MEDIUM-HIGH (80%) | Mar 2024 (books), Nov 2024 (business acct) confirmed via Bankwest website. |
+| **4 Commonwealth Acts** | MEDIUM-HIGH (80%) | 3 of 4 Acts confirmed with specific sections. National Health Act 1953 PBS provision less precisely documented. |
+| **Newcastle Permanent status** | MEDIUM-HIGH (75%) | Business Cheque Account actively advertised. No cessation announcement found. Could have unpublished internal changes. |
+| **Volume heuristic (Big 4 = ~80%)** | MEDIUM (60%) | Directional estimate based on deposit share proxy. Not measured. RBA C5/C5.1 data would give precise figures but was not used. |
+| **Smaller bank dates (Teachers Mutual, Heritage, HSBC)** | MEDIUM (55%) | Confirmed directionally but specific months unverified. HSBC has no dated announcement. |
+| **ME Bank cessation date** | MEDIUM (60%) | 1 May 2025 date sourced but URL is a generic process page, not a cessation announcement. |
+| **Market share percentages for mid/small banks** | LOW-MEDIUM (45%) | Pure heuristic. No measured data. Mutual banks may have had disproportionate cheque usage vs deposit share. |
+| **UK precedent applicability** | MEDIUM (55%) | UK did reverse in 2018, but Australia's regulatory framework is more advanced. Risk is real but magnitude uncertain. |
 
 *Report generated by multi-agent research team, 22 March 2026. All URLs are from authoritative bank, government, or regulatory sources. Volume estimates are heuristic-based and should be validated against RBA C5/C5.1 data tables for precision. Red hat analysis independently verified key claims via 37 web searches -- see red-hat-analysis.md for full critical assessment.*

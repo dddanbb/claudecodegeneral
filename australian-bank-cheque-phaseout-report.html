@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Australian Bank Cheque Phase-Out Report</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --green: #22c55e;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --purple: #a78bfa;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+h1 { font-size: 2rem; margin-bottom: 8px; color: #fff; }
+h2 { font-size: 1.4rem; margin: 32px 0 16px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+h3 { font-size: 1.1rem; margin: 16px 0 8px; color: #fff; }
+.subtitle { color: var(--muted); margin-bottom: 24px; font-size: 0.9rem; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; flex: 1; min-width: 160px; text-align: center; }
+.stat .num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+.stat .label { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+th { background: #0f172a; color: var(--accent); text-align: left; padding: 10px 8px; border-bottom: 2px solid var(--border); position: sticky; top: 0; }
+td { padding: 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:hover td { background: rgba(56,189,248,0.05); }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.badge-ceased { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-winding { background: rgba(245,158,11,0.15); color: var(--amber); }
+.badge-active { background: rgba(239,68,68,0.15); color: var(--red); }
+.badge-high { background: rgba(34,197,94,0.15); color: var(--green); }
+.badge-medium { background: rgba(245,158,11,0.15); color: var(--amber); }
+.badge-low { background: rgba(239,68,68,0.15); color: var(--red); }
+.chart-wrap { position: relative; height: 300px; }
+.timeline { position: relative; padding-left: 30px; margin: 16px 0; }
+.timeline::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 20px; }
+.tl-item::before { content: ''; position: absolute; left: -23px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); }
+.tl-item.done::before { background: var(--green); border-color: var(--green); }
+.tl-item.current::before { background: var(--amber); border-color: var(--amber); }
+.tl-item.future::before { background: var(--bg); }
+.tl-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+.tl-text { font-size: 0.9rem; }
+.risk-item { background: var(--card); border-left: 3px solid var(--amber); padding: 12px 16px; margin: 8px 0; border-radius: 0 8px 8px 0; }
+.risk-item.high { border-left-color: var(--red); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; padding: 20px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Australian Bank Cheque Phase-Out</h1>
+<p class="subtitle">Comprehensive Research Report &mdash; 22 March 2026 | Red Hat reviewed (6/10) | Multi-agent web research</p>
+
+<!-- Key Stats -->
+<div class="stat-row">
+  <div class="stat"><div class="num">11/20</div><div class="label">Banks Fully Ceased</div></div>
+  <div class="stat"><div class="num">&lt;0.1%</div><div class="label">Share of Retail Payments</div></div>
+  <div class="stat"><div class="num">~86.5%</div><div class="label">Decline Over Decade</div></div>
+  <div class="stat"><div class="num">30 Sep 2029</div><div class="label">Final Deadline</div></div>
+</div>
+
+<!-- Regulatory Timeline -->
+<h2>Regulatory Timeline</h2>
+<div class="card">
+<div class="timeline">
+  <div class="tl-item done"><div class="tl-date">7 Jun 2023</div><div class="tl-text">Treasury Strategic Plan for Australia's Payments System released</div></div>
+  <div class="tl-item done"><div class="tl-date">Dec 2023</div><div class="tl-text">Treasury consultation paper on winding down cheques</div></div>
+  <div class="tl-item done"><div class="tl-date">18 Nov 2024</div><div class="tl-text"><strong>Cheques Transition Plan published</strong></div></div>
+  <div class="tl-item done"><div class="tl-date">18 Dec 2024</div><div class="tl-text">ACCC interim authorisation for AusPayNet wind-down</div></div>
+  <div class="tl-item done"><div class="tl-date">2 Jul 2025</div><div class="tl-text">ACCC final authorisation granted (AA1000689)</div></div>
+  <div class="tl-item current"><div class="tl-date">Now (Mar 2026)</div><div class="tl-text">11 of 20 banks fully ceased; Big 4 winding down</div></div>
+  <div class="tl-item future"><div class="tl-date">End 2028</div><div class="tl-text">Government ceases all cheque use</div></div>
+  <div class="tl-item future"><div class="tl-date">30 Jun 2028</div><div class="tl-text"><strong>ALL cheque issuance ceases</strong></div></div>
+  <div class="tl-item future"><div class="tl-date">30 Sep 2029</div><div class="tl-text"><strong>ALL cheque acceptance ceases</strong> &mdash; system permanently closes</div></div>
+  <div class="tl-item future"><div class="tl-date">31 Dec 2030</div><div class="tl-text">ACCC authorisation expires</div></div>
+</div>
+</div>
+
+<!-- Charts -->
+<h2>Cheque Decline &amp; Bank Status</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Cheque Volume Decline</h3>
+    <div class="chart-wrap"><canvas id="declineChart"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Bank Status (Top 20)</h3>
+    <div class="chart-wrap"><canvas id="statusChart"></canvas></div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h3>Consumer Payment Share (%)</h3>
+    <div class="chart-wrap"><canvas id="shareChart"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Est. Current Cheque Volume Distribution</h3>
+    <div class="chart-wrap"><canvas id="volumeChart"></canvas></div>
+  </div>
+</div>
+
+<!-- Master Bank Table -->
+<h2>Top 20 Banks: Cheque Phase-Out Status</h2>
+<div class="card" style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>#</th><th>Bank</th><th>Tier</th><th>Est. Share</th><th>Stop Issuing</th><th>Stop Accepting</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td><strong>CBA</strong></td><td>Big 4</td><td>~25%</td><td>3 Jun 2023 (new accts + auto-reissue)</td><td>30 Sep 2029</td><td><span class="badge badge-winding">Winding Down</span></td></tr>
+<tr><td>2</td><td><strong>Westpac</strong></td><td>Big 4</td><td>~20%</td><td>May 2025 (corp); Aug 2026 (bank cheques)</td><td>30 Sep 2029</td><td><span class="badge badge-winding">Winding Down</span></td></tr>
+<tr><td>3</td><td><strong>NAB</strong></td><td>Big 4</td><td>~18%</td><td>Mar 2023 (new accts)</td><td>30 Sep 2029</td><td><span class="badge badge-winding">Winding Down</span></td></tr>
+<tr><td>4</td><td><strong>ANZ</strong></td><td>Big 4</td><td>~17%</td><td>Jun 2024 (new); Nov 2024 (counter)</td><td>30 Sep 2029</td><td><span class="badge badge-winding">Winding Down</span></td></tr>
+<tr><td>5</td><td>Macquarie</td><td>Medium</td><td>~3%</td><td>Jan 2024 (books); May 2024 (counter)</td><td>1 Nov 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>6</td><td>Bendigo &amp; Adelaide</td><td>Medium</td><td>~2%</td><td>Nov 2023 (no new books)</td><td>TBD (by Sep 2029)</td><td><span class="badge badge-winding">Issuance Ceased</span></td></tr>
+<tr><td>7</td><td>BOQ</td><td>Medium</td><td>~2%</td><td>Dec 2025</td><td>TBD (by Sep 2029)</td><td><span class="badge badge-winding">Issuance Ceased</span></td></tr>
+<tr><td>8</td><td>Suncorp (now ANZ)</td><td>Medium</td><td>~1.5%</td><td>1 Mar 2024</td><td>14 Feb 2025</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>9</td><td>ING Australia</td><td>Medium</td><td>~1.5%</td><td>Mar 2026 (bank cheques)</td><td>Still accepting</td><td><span class="badge badge-winding">Winding Down</span></td></tr>
+<tr><td>10</td><td>HSBC Australia</td><td>Medium</td><td>~1%</td><td>Ongoing (no new books)</td><td>TBD</td><td><span class="badge badge-winding">Issuance Ceased</span></td></tr>
+<tr><td>11</td><td>AMP</td><td>Small</td><td>~0.5%</td><td>11 May 2024 (3-stage)</td><td>24 Nov 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>12</td><td>People First Bank</td><td>Mutual</td><td>~0.4%</td><td>Mar 2024</td><td>May 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>13</td><td>Newcastle Permanent</td><td>Mutual</td><td>~0.4%</td><td>Still issuing</td><td>Still accepting</td><td><span class="badge badge-active">Still Active</span></td></tr>
+<tr><td>14</td><td>Great Southern Bank</td><td>Mutual</td><td>~0.3%</td><td>Before May 2024</td><td>24 May 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>15</td><td>Citibank (now NAB)</td><td>Acquired</td><td>~0.5%</td><td>Feb 2024</td><td>Feb 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>16</td><td>Bank Australia</td><td>Mutual</td><td>~0.2%</td><td>12 Jan 2024</td><td>28 Mar 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>17</td><td>Teachers Mutual</td><td>Mutual</td><td>~0.2%</td><td>2023 *</td><td>2023 *</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>18</td><td>Beyond Bank</td><td>Mutual</td><td>~0.1%</td><td>May 2024</td><td>17 May 2024</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>19</td><td>ME Bank (BOQ sub)</td><td>Subsidiary</td><td>~0.5%</td><td>1 May 2025</td><td>1 May 2025</td><td><span class="badge badge-ceased">Fully Ceased</span></td></tr>
+<tr><td>20</td><td>Bankwest (CBA sub)</td><td>Subsidiary</td><td>~1%</td><td>Mar 2024 (books); Nov 2024 (biz acct)</td><td>Aligned w/ CBA</td><td><span class="badge badge-winding">Issuance Ceased</span></td></tr>
+</tbody>
+</table>
+<p style="font-size:0.75rem; color:var(--muted); margin-top:8px;">* Month unverified. Market share estimates are heuristic-based (deposit share proxy). See methodology notes.</p>
+</div>
+
+<!-- Commonwealth Acts -->
+<h2>Legislative Barriers: 4 Commonwealth Acts</h2>
+<div class="card">
+<p style="margin-bottom:12px;">Four Commonwealth Acts mandate cheque payment exclusively and must be amended before the system can close:</p>
+<table>
+<thead><tr><th>Act</th><th>Section</th><th>Mechanism</th><th>Confidence</th></tr></thead>
+<tbody>
+<tr><td><strong>Health Insurance Act 1973</strong></td><td>s.20(2)</td><td>Medicare "Pay Doctor Via Claimant" &mdash; must mail cheque to patient</td><td><span class="badge badge-high">HIGH</span></td></tr>
+<tr><td><strong>Dental Benefits Act 2008</strong></td><td>Benefit payment</td><td>Child Dental Benefits Schedule mirrors PDVC cheque mechanism</td><td><span class="badge badge-high">HIGH</span></td></tr>
+<tr><td><strong>National Health Act 1953</strong></td><td>PBS provisions</td><td>Pharmaceutical Benefits Scheme payment provisions</td><td><span class="badge badge-medium">MEDIUM</span></td></tr>
+<tr><td><strong>Small Superannuation Accounts Act 1995</strong></td><td>s.32(2)</td><td>Super Holding Account payments must be non-electronic</td><td><span class="badge badge-high">HIGH</span></td></tr>
+</tbody>
+</table>
+<p style="font-size:0.85rem; margin-top:12px; color:var(--muted);">Additionally: state gambling legislation must be amended; the Cheques Act 1986 will be repealed. The Treasury Laws Amendment (Modernising Business Communications) Act 2023 already repealed one prior ATO cheque mandate.</p>
+</div>
+
+<!-- Risk Factors -->
+<h2>Risk Factors &amp; Caveats</h2>
+<div class="risk-item high"><strong>UK Precedent:</strong> The UK attempted to abolish cheques by 2018 and reversed course due to public opposition from elderly and charity groups. Similar political pressure could delay Australia's timeline.</div>
+<div class="risk-item high"><strong>Digital Exclusion:</strong> 66.5% of Australians 75+ are digitally excluded; 40.9% of First Nations people; ~1.1M with disability are "highly digitally excluded" (2025 ADII).</div>
+<div class="risk-item"><strong>Legislative Reform Required:</strong> 4 Commonwealth Acts + state gambling laws must be amended. No confirmed timeline for all amendments.</div>
+<div class="risk-item"><strong>Volume Still Material:</strong> Despite &lt;0.1% of transactions, cheques still cleared ~$12.89B monthly (Feb 2025). 3.5M bank cheques worth $820M remain uncashed.</div>
+<div class="risk-item"><strong>Charity Sector:</strong> Heart Foundation, Greenpeace, Sydney Eye Hospital Foundation have published guidance on cheque phase-out impact on donations.</div>
+<div class="risk-item"><strong>Volume Heuristic Limitations:</strong> Market share estimates use deposit share as proxy. RBA C5/C5.1 data tables should be consulted for material financial decisions.</div>
+
+<!-- Sectors at Risk -->
+<h2>Sectors Still at Risk</h2>
+<div class="grid">
+  <div class="card">
+    <h3>Property Conveyancing</h3>
+    <p>Bank cheques were 9% of volume but &gt;50% of value. Largely migrating to PEXA digital settlement.</p>
+  </div>
+  <div class="card">
+    <h3>Government Payments</h3>
+    <p>98% of Commonwealth cheques from Health, Services Australia, and ATO. Legislative reform needed.</p>
+  </div>
+  <div class="card">
+    <h3>Older Australians</h3>
+    <p>14% of 65+ made a cheque payment in prior year. 80%+ of remaining cheque users are over 65.</p>
+  </div>
+  <div class="card">
+    <h3>Charities &amp; Regional SMEs</h3>
+    <p>Higher-than-average reliance on cheques for donations and supplier payments.</p>
+  </div>
+</div>
+
+<!-- Confidence Levels -->
+<h2>Confidence Levels</h2>
+<div class="card" style="overflow-x:auto;">
+<table>
+<thead><tr><th>Element</th><th>Confidence</th><th>Explanation</th></tr></thead>
+<tbody>
+<tr><td>Regulatory dates (2028/2029)</td><td><span class="badge badge-high">95%</span></td><td>Confirmed by Treasury, ACCC, AusPayNet</td></tr>
+<tr><td>ACCC authorisation (2 Jul 2025)</td><td><span class="badge badge-high">95%</span></td><td>Document ref, URL, date all confirmed</td></tr>
+<tr><td>RBA decline statistics</td><td><span class="badge badge-high">90%</span></td><td>Primary source (RBA CPS 2022) directly verified</td></tr>
+<tr><td>Big 4 bank dates</td><td><span class="badge badge-high">85%</span></td><td>All confirmed; minor nuances on scope</td></tr>
+<tr><td>Macquarie, Suncorp cessation</td><td><span class="badge badge-high">85%</span></td><td>Dates confirmed with phased detail</td></tr>
+<tr><td>4 Commonwealth Acts</td><td><span class="badge badge-medium">80%</span></td><td>3/4 confirmed with sections; National Health Act less documented</td></tr>
+<tr><td>Newcastle Permanent status</td><td><span class="badge badge-medium">75%</span></td><td>Actively advertised; could have unpublished changes</td></tr>
+<tr><td>Volume heuristic (Big 4 = ~80%)</td><td><span class="badge badge-medium">60%</span></td><td>Directional estimate, not measured</td></tr>
+<tr><td>Smaller bank dates</td><td><span class="badge badge-medium">55%</span></td><td>Confirmed directionally; specific months unverified</td></tr>
+<tr><td>Market share for mid/small banks</td><td><span class="badge badge-low">45%</span></td><td>Pure heuristic, no measured data</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Key Findings -->
+<h2>Key Findings</h2>
+<div class="card">
+<ol style="padding-left:20px;">
+<li style="margin-bottom:12px;"><strong>Terminal decline, not yet dead.</strong> At &lt;0.1% of retail payments and declining 20%+ annually, cheques are functionally irrelevant. But $12.89B/month still clears.</li>
+<li style="margin-bottom:12px;"><strong>Smaller banks exited first</strong> &mdash; driven by third-party processing agreements expiring, not customer demand.</li>
+<li style="margin-bottom:12px;"><strong>Big 4 are life support.</strong> CBA, Westpac, NAB, ANZ process ~80% of remaining cheques and guarantee participation until September 2029.</li>
+<li style="margin-bottom:12px;"><strong>CBA &amp; NAB moved earliest</strong> (Mar&ndash;Jun 2023). <strong>Westpac moved last</strong> &mdash; still issuing personal cheque books as of early 2026.</li>
+<li style="margin-bottom:12px;"><strong>Stale cheque mechanism is elegant:</strong> 15-month gap between issuance and acceptance cessation means all valid cheques expire naturally.</li>
+<li style="margin-bottom:12px;"><strong>Legislative reform required:</strong> 4 Commonwealth Acts mandate cheque payment exclusively. Government is actively reforming (one ATO mandate already repealed).</li>
+</ol>
+</div>
+
+<div class="footer">
+  Report generated by multi-agent research team, 22 March 2026. All URLs from authoritative bank, government, or regulatory sources.<br>
+  Volume estimates are heuristic-based. Red Hat analysis independently verified key claims via 37 web searches.<br>
+  See <a href="australian-bank-cheque-phaseout-report.md">full markdown report</a> and <a href="red-hat-analysis.md">red hat analysis</a> for complete details and source URLs.
+</div>
+
+</div>
+
+<script>
+// Cheque volume decline chart
+new Chart(document.getElementById('declineChart'), {
+  type: 'line',
+  data: {
+    labels: ['1980s', '1990s', '2007', '2013', '2016', '2019', '2022', '2024'],
+    datasets: [{
+      label: 'Consumer Payment Share (%)',
+      data: [85, 50, 1.2, 0.4, 0.2, 0.2, 0.1, 0.05],
+      borderColor: '#38bdf8',
+      backgroundColor: 'rgba(56,189,248,0.1)',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 5,
+      pointBackgroundColor: '#38bdf8'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#94a3b8' } } },
+    scales: {
+      y: { type: 'logarithmic', title: { display: true, text: '% of payments (log scale)', color: '#94a3b8' }, ticks: { color: '#94a3b8', callback: v => v + '%' }, grid: { color: '#334155' } },
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+    }
+  }
+});
+
+// Bank status donut
+new Chart(document.getElementById('statusChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Fully Ceased (11)', 'Winding Down (8)', 'Still Active (1)'],
+    datasets: [{
+      data: [11, 8, 1],
+      backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+      borderColor: '#1e293b',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 16 } } }
+  }
+});
+
+// Consumer payment share bar chart
+new Chart(document.getElementById('shareChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2007', '2013', '2016', '2019', '2022'],
+    datasets: [{
+      label: 'Cheque share of consumer payments (%)',
+      data: [1.2, 0.4, 0.2, 0.2, 0.1],
+      backgroundColor: ['#38bdf8', '#38bdf8', '#38bdf8', '#f59e0b', '#ef4444']
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#94a3b8' } } },
+    scales: {
+      y: { title: { display: true, text: '% share', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+      x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+    }
+  }
+});
+
+// Volume distribution pie
+new Chart(document.getElementById('volumeChart'), {
+  type: 'pie',
+  data: {
+    labels: ['Big 4 (~80%)', 'Medium banks (~7%)', 'Newcastle Perm (~0.4%)', 'Govt & other (~12.6%)'],
+    datasets: [{
+      data: [80, 7, 0.4, 12.6],
+      backgroundColor: ['#38bdf8', '#a78bfa', '#ef4444', '#f59e0b'],
+      borderColor: '#1e293b',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 12 } } }
+  }
+});
+</script>
+</body>
+</html>
